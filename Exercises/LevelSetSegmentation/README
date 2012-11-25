@@ -2,7 +2,9 @@
 To run this example use:
 
 
-./LevelSet ./cells.png 100 1 1 output.mha
+./LevelSet ./cells.png 100 4000 1 output.mha
+
+./LevelSet ./FatMRISlice.png 800 2000 1 fat.mha 
 
 
 

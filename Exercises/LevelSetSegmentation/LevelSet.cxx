@@ -37,16 +37,6 @@
 #include "itkLevelSetIterationUpdateCommand.h"
 #include "vtkVisualize2DSparseLevelSetLayers.h"
 
-// ------------------------------------------------------------------------
-//
-// Exercise: Add a curvature term for regularization.
-//
-// The coefficient for the new term will be provided as an argument to the
-// executable.
-//
-// ------------------------------------------------------------------------
-
-
 int main( int argc, char* argv[] )
 {
   if( argc < 6 )
@@ -83,12 +73,17 @@ int main( int argc, char* argv[] )
   binary->Allocate();
   binary->FillBuffer( itk::NumericTraits<InputPixelType>::Zero );
 
-  InputImageType::RegionType region;
+  InputImageType::RegionType region = inputImage->GetBufferedRegion();
   InputImageType::IndexType index;
   InputImageType::SizeType size;
 
-  index.Fill( 5 );
-  size.Fill( 120 );
+  const unsigned int borderSize = 5;
+
+  index.Fill( borderSize );
+  size = region.GetSize();
+
+  size[0] -= 2 * borderSize;
+  size[1] -= 2 * borderSize;
 
   region.SetIndex( index );
   region.SetSize( size );
