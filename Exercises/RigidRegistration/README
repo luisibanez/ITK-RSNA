@@ -1,0 +1,11 @@
+To run this example use
+
+./RigidRegistration \
+BrainProtonDensitySliceBorder20.png \
+BrainProtonDensitySliceR10X13Y17.png \
+Output.png \
+DifferenceBefore.png \
+DifferenceAfter.png 
+
+
+Experiment with the effect of changing the Step Length in the Optimizer
