@@ -1,0 +1,9 @@
+
+To run this example use:
+
+./ConfidenceConnected ./BrainProtonDensitySlice.png output.png 60 116
+
+./ConfidenceConnected ./BrainProtonDensitySlice.png output.png 81 112
+
+
+
