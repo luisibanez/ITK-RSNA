@@ -268,7 +268,8 @@ int main( int argc, char* argv[] )
     return EXIT_FAILURE;
     }
 
-  typedef itk::Image< char, Dimension > OutputImageType;
+  typedef signed char  OutputPixelType;
+  typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
   OutputImageType::Pointer outputImage = OutputImageType::New();
   outputImage->SetRegions( inputImage->GetLargestPossibleRegion() );
   outputImage->CopyInformation( inputImage );
@@ -288,10 +289,24 @@ int main( int argc, char* argv[] )
     ++oIt;
     }
 
-  typedef itk::ImageFileWriter< OutputImageType >     OutputWriterType;
+  typedef unsigned char WritePixelType;
+  typedef itk::Image< WritePixelType, Dimension > WriteImageType;
+
+  typedef itk::BinaryThresholdImageFilter<
+    OutputImageType, WriteImageType > ThresholdFilterType;
+
+  ThresholdFilterType::Pointer thresholder = ThresholdFilterType::New();
+
+  thresholder->SetInput( outputImage );
+  thresholder->SetOutsideValue( itk::NumericTraits< WritePixelType >::max() );
+  thresholder->SetInsideValue(  itk::NumericTraits< WritePixelType >::Zero );
+  thresholder->SetLowerThreshold( itk::NumericTraits< OutputPixelType >::Zero );
+  thresholder->SetUpperThreshold( itk::NumericTraits< OutputPixelType >::max() );
+
+  typedef itk::ImageFileWriter< WriteImageType >   OutputWriterType;
   OutputWriterType::Pointer writer = OutputWriterType::New();
   writer->SetFileName( argv[5] );
-  writer->SetInput( outputImage );
+  writer->SetInput( thresholder->GetOutput() );
 
   try
     {
