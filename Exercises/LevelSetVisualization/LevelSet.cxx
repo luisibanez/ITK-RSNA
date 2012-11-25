@@ -34,17 +34,20 @@
 #include "itkWhitakerSparseLevelSetImage.h"
 #include "itkLevelSetEquationCurvatureTerm.h"
 
+#include "itkLevelSetIterationUpdateCommand.h"
+#include "vtkVisualize2DSparseLevelSetLayers.h"
 
 int main( int argc, char* argv[] )
 {
-  if( argc < 5 )
+  if( argc < 6 )
     {
     std::cerr << "Missing Arguments" << std::endl;
     std::cerr << "./LevelSetExercise1 " <<std::endl;
     std::cerr << "1- Input Image" <<std::endl;
     std::cerr << "2- Number of Iterations" <<std::endl;
     std::cerr << "3- Curvature Term coefficient" <<std::endl;
-    std::cerr << "4- Output Image" <<std::endl;
+    std::cerr << "4- Visualization (0 or 1)" <<std::endl;
+    std::cerr << "5- Output" <<std::endl;
 
     return EXIT_FAILURE;
     }
@@ -231,6 +234,25 @@ int main( int argc, char* argv[] )
 
   LevelSetEvolutionType::Pointer evolution = LevelSetEvolutionType::New();
 
+  // Create the visualizer
+  typedef vtkVisualize2DSparseLevelSetLayers< InputImageType, SparseLevelSetType > VisualizationType;
+  VisualizationType::Pointer visualizer = VisualizationType::New();
+
+  visualizer->SetInputImage( inputImage );
+  visualizer->SetLevelSet( levelSet );
+  visualizer->SetScreenCapture( false );
+  std::cout << "Visualizer created" << std::endl;
+
+  typedef itk::LevelSetIterationUpdateCommand< LevelSetEvolutionType, VisualizationType > IterationUpdateCommandType;
+  IterationUpdateCommandType::Pointer iterationUpdateCommand = IterationUpdateCommandType::New();
+  iterationUpdateCommand->SetFilterToUpdate( visualizer );
+  iterationUpdateCommand->SetUpdatePeriod( 1 );
+
+  if( atoi( argv[4] ) == 1 )
+    {
+    evolution->AddObserver( itk::IterationEvent(), iterationUpdateCommand );
+    }
+
   evolution->SetEquationContainer( equationContainer );
   evolution->SetStoppingCriterion( criterion );
   evolution->SetLevelSetContainer( lscontainer );
@@ -282,7 +304,7 @@ int main( int argc, char* argv[] )
 
   typedef itk::ImageFileWriter< WriteImageType >   OutputWriterType;
   OutputWriterType::Pointer writer = OutputWriterType::New();
-  writer->SetFileName( argv[4] );
+  writer->SetFileName( argv[5] );
   writer->SetInput( thresholder->GetOutput() );
 
   try
