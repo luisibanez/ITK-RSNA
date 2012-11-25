@@ -1,0 +1,9 @@
+
+To run this example use:
+
+./MedianImageFilter ./BrainProtonDensitySlice.png output.png
+
+
+Experiment with the effect of changing the Radius value.
+
+
