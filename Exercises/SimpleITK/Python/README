@@ -1,20 +1,29 @@
 
 How To Execute this examples.
 
+Note that this is a 3D image.
+You could visualize it with VTK, VolView, Slicer or Paraview.
+
+
 A) RegionGrowingSegmenation
 
    Type the command:
 
    simpleITK RegionGrowingSegmentation01.py ~/data/BrainWeb/brainweb165a10f17.mha segmentation.mha
 
-   Note that this is a 3D image.
-   You could visualize it with VTK, VolView, Slicer or Paraview.
 
 B) MedianImageFilter
 
    Type the command:
 
    simpleITK MedianImageFilter01.py ~/data/BrainWeb/brainweb165a10f17.mha   median.mha
+
+
+C) CannyEdgeDetection
+
+   Type the command:
+
+   simpleITK CannyEdgeDetection01.py ~/data/BrainWeb/brainweb165a10f17.mha  canny.mha
 
 
 
