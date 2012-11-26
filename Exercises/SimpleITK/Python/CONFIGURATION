@@ -1,0 +1,16 @@
+
+How To Execute this example.
+
+1) In your build of SimpleITK create an alias to the file:
+
+   SimpleITK/Release/Testing/Installation/PythonVirtualenv/bin/python
+
+   for example
+
+    alias simpleITK SimpleITK/Release/Testing/Installation/PythonVirtualenv/bin/python
+
+   in this way you can use a python executable that is already configured
+   to find the SimpleITK Libraries.
+
+
+ simpleITK RegionGrowingSegmentation02.py ~/data/BrainWeb/brainweb165a10f17.mha /tmp/output.mha

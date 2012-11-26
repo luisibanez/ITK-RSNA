@@ -29,7 +29,7 @@ inputImage = sitk.ReadImage( sys.argv[1] )
 
 segmenter = sitk.ConfidenceConnectedImageFilter()
 
-segmenter.AddSeed([60,116])
+segmenter.AddSeed([60,116,100])
 segmenter.SetMultiplier( 2.5 )
 segmenter.SetNumberOfIterations( 5 )
 segmenter.SetReplaceValue( 255 )

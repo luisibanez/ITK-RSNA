@@ -1,0 +1,14 @@
+
+How To Execute this examples.
+
+A) RegionGrowingSegmenation
+
+   Type the command:
+
+   simpleITK RegionGrowingSegmentation01.py ~/data/BrainWeb/brainweb165a10f17.mha output.mha
+
+   Note that this is a 3D image.
+   You could visualize it with VTK, VolView, Slicer or Paraview.
+
+
+
